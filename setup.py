@@ -43,7 +43,7 @@ for x in range(3):
 
 commands_2 = [
     "pip3 install RPi.GPIO",
-    "pip3 install -r " + thisPath + "/Adeept_RaspTank/server/requirements.txt",
+    "pip3 install -r " + thisPath + "/server/requirements.txt",
     "git clone https://github.com/oblique/create_ap",
     "cd " + thisPath + "/create_ap && sudo make install",
 ]
@@ -59,7 +59,7 @@ for x in range(3):
 
 commands_3 = [
     "pip3 install numpy",
-    "pip3 install opencv-contrib-python==3.4.3.18",
+    "pip3 install opencv-contrib-python==3.4.11.45",
     "pip3 install imutils zmq pybase64 psutil"
 ]
 
@@ -100,9 +100,9 @@ try: #fix conflict with onboard Raspberry Pi audio
 except:
     pass
 try:
-    os.system("cp -f "+ thisPath  +"/Adeept_RaspTank/server/config.txt //etc/config.txt")
+    os.system("cp -f "+ thisPath  +"/server/config.txt //etc/config.txt")
 except:
-    os.system("cp -f "+ thisPath  +"/Adeept_RaspTank/server/config.txt //etc/config.txt")
+    os.system("cp -f "+ thisPath  +"/server/config.txt //etc/config.txt")
 print('The program in Raspberry Pi has been installed, disconnected and restarted. \nYou can now power off the Raspberry Pi to install the camera and driver board (Robot HAT). \nAfter turning on again, the Raspberry Pi will automatically run the program to set the servos port signal to turn the servos to the middle position, which is convenient for mechanical assembly.')
 print('restarting...')
 os.system("reboot")
