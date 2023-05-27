@@ -6,6 +6,7 @@
 import os
 import time
 
+os.environ["ENV PIP_ROOT_USER_ACTION"]="ignore"
 curpath = os.path.realpath(__file__)
 thisPath = "/" + os.path.dirname(curpath)
 
@@ -19,6 +20,23 @@ def replace_num(file,initial,new_num):
             newline += line
     with open(file,"w") as f:
         f.writelines(newline)
+
+
+def add_file(file, atxt):
+    str_atxt=str(atxt)
+    with open(file,"a") as f:
+      f.write("\n"+atxt+"\n")
+
+
+def configure_wifi():
+    print("Configuring WPA2...")
+    ssid=input('What is the name of your wifi network (SSID)?\n')
+    pwd=input('What is the wifi password?\n')
+    content="network={{\nssid=\"{}\"\nproto=WPA2\nkey_mgmt=WPA-PSK\npairwise=CCMP TKIP\nscan_ssid=1\npsk=\"{}\"\npriority=10\n}}".format(ssid, pwd)
+    add_file("/etc/wpa_supplicant.conf", content)
+
+    
+configure_wifi()
 
 commands_1 = [
     "pip3 install -U pip",
@@ -59,7 +77,8 @@ for x in range(3):
 
 commands_3 = [
     "pip3 install numpy",
-    "pip3 install opencv-contrib-python==3.4.11.45",
+    #"pip3 install opencv-contrib-python==3.4.11.45",
+    "pip3 install opencv-contrib-python",
     "pip3 install imutils zmq pybase64 psutil"
 ]
 
@@ -73,10 +92,10 @@ for x in range(3):
         break
 
 
-try:
-    replace_num("/boot/config.txt", '#dtparam=i2c_arm=on','dtparam=i2c_arm=on\nstart_x=1\n')
-except:
-    print('Error updating boot config to enable i2c. Please try again.')
+#try:
+#    replace_num("/boot/config.txt", '#dtparam=i2c_arm=on','dtparam=i2c_arm=on\nstart_x=1\n')
+#except:
+#    print('Error updating boot config to enable i2c. Please try again.')
 
 
 
@@ -84,7 +103,7 @@ try:
     os.system('sudo touch ' + thisPath + '/startup.sh')
     with open(thisPath + "/startup.sh",'w') as file_to_write:
         #you can choose how to control the robot
-        file_to_write.write("#!/bin/sh\npython3 " + thisPath + "/server/webServer.py")
+        file_to_write.write("#!/bin/sh\nifup wlan0\nmodprobe i2c_dev\npython3 " + thisPath + "/server/webServer.py")
 except:
     pass
 
