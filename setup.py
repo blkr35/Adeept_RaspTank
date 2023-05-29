@@ -23,7 +23,6 @@ def configure_wifi():
     content="network={{\nssid=\"{}\"\nproto=WPA2\nkey_mgmt=WPA-PSK\npairwise=CCMP TKIP\nscan_ssid=1\npsk=\"{}\"\npriority=10\n}}".format(ssid, pwd)
     add_file("/etc/wpa_supplicant.conf", content)
 
-<<<<<<< HEAD
 
 if not os.path.isfile("//.rasptank_wifi"):
     configure_wifi()
@@ -35,7 +34,9 @@ if not os.path.isfile("//etc/init.d/rasptank_service.sh"):
     time.sleep(3)
     try:
         os.system("cp -f "+ thisPath  +"/rasptank_service.sh //etc/init.d/")
+        os.system("update-rc.d rasptank_service.sh defaults")
         os.system("reboot")
+        os.exit()
     except:
         print("Error: installation service could not be configured.")
 
@@ -77,4 +78,8 @@ os.system('touch //.rasptank_installed')
 
 print('Update/Installation complete. \nIf not assembled already, you can now power off the Raspberry Pi to install the camera and driver board (Robot HAT). \nAfter turning on again, the Raspberry Pi will automatically run the program to set the servos port signal to turn the servos to the middle position, which is convenient for mechanical assembly.')
 print('Restarting...')
+
+time.sleep(3)
+os.system("reboot")
+os.exit()
 
