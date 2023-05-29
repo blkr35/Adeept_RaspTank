@@ -45,10 +45,12 @@ def num_import(initial):            #Call this function to import data from '.tx
     return n    
 
 def call_forward(event):         #When this function is called,client commands the car to move forward
-    tcpClicSock.send(('add').encode())
+    #tcpClicSock.send(('add').encode())
+    tcpClicSock.send(('sub').encode())
 
 def call_back(event):            #When this function is called,client commands the car to move backward
-    tcpClicSock.send(('sub').encode())
+    #tcpClicSock.send(('sub').encode())
+    tcpClicSock.send(('add').encode())
 
 def normal_state():
     Btn_L0.config(fg=color_text,bg=color_btn)

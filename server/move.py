@@ -66,13 +66,13 @@ def motor_left(status, direction, speed):#Motor 2 positive and negative rotation
 		GPIO.output(Motor_B_EN, GPIO.LOW)
 	else:
 		if direction == Dir_backward:
-			GPIO.output(Motor_B_Pin1, GPIO.HIGH)
-			GPIO.output(Motor_B_Pin2, GPIO.LOW)
+			GPIO.output(Motor_B_Pin1, GPIO.LOW)
+			GPIO.output(Motor_B_Pin2, GPIO.HIGH)
 			pwm_B.start(100)
 			pwm_B.ChangeDutyCycle(speed)
 		elif direction == Dir_forward:
-			GPIO.output(Motor_B_Pin1, GPIO.LOW)
-			GPIO.output(Motor_B_Pin2, GPIO.HIGH)
+			GPIO.output(Motor_B_Pin1, GPIO.HIGH)
+			GPIO.output(Motor_B_Pin2, GPIO.LOW)
 			pwm_B.start(0)
 			pwm_B.ChangeDutyCycle(speed)
 
@@ -84,13 +84,13 @@ def motor_right(status, direction, speed):#Motor 1 positive and negative rotatio
 		GPIO.output(Motor_A_EN, GPIO.LOW)
 	else:
 		if direction == Dir_forward:#
-			GPIO.output(Motor_A_Pin1, GPIO.HIGH)
-			GPIO.output(Motor_A_Pin2, GPIO.LOW)
+			GPIO.output(Motor_A_Pin1, GPIO.LOW)
+			GPIO.output(Motor_A_Pin2, GPIO.HIGH)
 			pwm_A.start(100)
 			pwm_A.ChangeDutyCycle(speed)
 		elif direction == Dir_backward:
-			GPIO.output(Motor_A_Pin1, GPIO.LOW)
-			GPIO.output(Motor_A_Pin2, GPIO.HIGH)
+			GPIO.output(Motor_A_Pin1, GPIO.HIGH)
+			GPIO.output(Motor_A_Pin2, GPIO.LOW)
 			pwm_A.start(0)
 			pwm_A.ChangeDutyCycle(speed)
 	return direction
@@ -100,31 +100,31 @@ def move(speed, direction, turn, radius=0.6):   # 0 < radius <= 1
 	#speed = 100
 	if direction == 'forward':
 		if turn == 'right':
-			motor_left(0, left_backward, int(speed*radius))
-			motor_right(1, right_forward, speed)
-		elif turn == 'left':
 			motor_left(1, left_forward, speed)
 			motor_right(0, right_backward, int(speed*radius))
+		elif turn == 'left':
+			motor_left(0, left_backward, int(speed*radius))
+			motor_right(1, right_forward, speed)
 		else:
 			motor_left(1, left_forward, speed)
 			motor_right(1, right_forward, speed)
 	elif direction == 'backward':
 		if turn == 'right':
-			motor_left(0, left_forward, int(speed*radius))
-			motor_right(1, right_backward, speed)
-		elif turn == 'left':
 			motor_left(1, left_backward, speed)
 			motor_right(0, right_forward, int(speed*radius))
+		elif turn == 'left':
+			motor_left(0, left_forward, int(speed*radius))
+			motor_right(1, right_backward, speed)
 		else:
 			motor_left(1, left_backward, speed)
 			motor_right(1, right_backward, speed)
 	elif direction == 'no':
 		if turn == 'right':
-			motor_left(1, left_backward, speed)
-			motor_right(1, right_forward, speed)
-		elif turn == 'left':
 			motor_left(1, left_forward, speed)
 			motor_right(1, right_backward, speed)
+		elif turn == 'left':
+			motor_left(1, left_backward, speed)
+			motor_right(1, right_forward, speed)
 		else:
 			motorStop()
 	else:

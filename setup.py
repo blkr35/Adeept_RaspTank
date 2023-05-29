@@ -6,7 +6,7 @@
 import os
 import time
 
-os.environ["ENV PIP_ROOT_USER_ACTION"]="ignore"
+os.environ["PIP_ROOT_USER_ACTION"]="ignore"
 curpath = os.path.realpath(__file__)
 thisPath = "/" + os.path.dirname(curpath)
 
@@ -36,9 +36,11 @@ def configure_wifi():
     add_file("/etc/wpa_supplicant.conf", content)
 
     
+print("Installing Adeept Software Stack")
+
 configure_wifi()
 
-commands_1 = [
+'''commands_1 = [
     "pip3 install -U pip",
     "pip3 install --upgrade luma.oled",
     "pip3 install adafruit-pca9685",
@@ -57,27 +59,28 @@ for x in range(3):
             mark_1 = 1
     if mark_1 == 0:
         break
+'''
 
 
-commands_2 = [
-    "pip3 install RPi.GPIO",
+commands = [
+    #"pip3 install RPi.GPIO",
     "pip3 install -r " + thisPath + "/server/requirements.txt",
-    "git clone https://github.com/oblique/create_ap",
-    "cd " + thisPath + "/create_ap && sudo make install",
+    #"git clone https://github.com/oblique/create_ap",
+    #"cd " + thisPath + "/create_ap && sudo make install",
 ]
 
-mark_2 = 0
+mark = 0
 for x in range(3):
-    for command in commands_2:
+    for command in commands:
         if os.system(command) != 0:
-            print("Error running installation step 2")
-            mark_2 = 1
-    if mark_2 == 0:
+            print("Error running installation steps ("+x+"/3)")
+            mark = 1
+    if mark == 0:
         break
 
+'''
 commands_3 = [
     "pip3 install numpy",
-    #"pip3 install opencv-contrib-python==3.4.11.45",
     "pip3 install opencv-contrib-python",
     "pip3 install imutils zmq pybase64 psutil"
 ]
@@ -90,7 +93,7 @@ for x in range(3):
             mark_3 = 1
     if mark_3 == 0:
         break
-
+'''
 
 try:
     replace_num("/boot/config.txt", '#dtparam=i2c_arm=on','dtparam=i2c_arm=on\nstart_x=1\n')
