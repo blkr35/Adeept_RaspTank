@@ -44,6 +44,8 @@ print("Installing Adeept RaspTank Software Stack...")
 if not os.path.isfile("//.rasptank_wifi"):
     configure_wifi()
     os.system('touch //.rasptank_wifi')
+else:
+    print("WiFi WPA2 is already configured. Remove the file /.rasptank_wifi to reconfigure it.")
 
 
 if not os.path.isfile("//etc/init.d/rasptank_service.sh"):
@@ -56,6 +58,12 @@ if not os.path.isfile("//etc/init.d/rasptank_service.sh"):
         os.exit()
     except:
         print("Error: installation service could not be configured.")
+else:
+    print("RaspTank service is already configured.")
+    if not os.path.isfile("//.rasptank_installed"):
+        print("Rebooting now to finish installation...")
+        os.system("reboot")
+        os.exit()
 
 
 commands = [
