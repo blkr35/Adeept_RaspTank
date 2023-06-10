@@ -1,4 +1,10 @@
 #!/bin/sh
+echo ***********************************************
+echo *                                             *
+echo *             RaspTank software               *
+echo *                                             *
+echo ***********************************************
+
 ifup wlan0
 if [ ! -f "/.rasptank_installed" ]; then
   echo "Update/Installation of software requested..."
