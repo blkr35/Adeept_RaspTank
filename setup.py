@@ -108,6 +108,14 @@ try:
 except:
     pass
 
+# Display IP address on tty
+try:
+    with open("/etc/issue") as issuef:
+       if not 'IP address' in issuef.read():
+           os.system("echo \"IP address: \\4\" >> /etc/issue")
+except:
+    pass
+
 os.system('touch //.rasptank_installed')
 
 print('Update/Installation complete. \nIf not assembled already, you can now power off the Raspberry Pi to install the camera and driver board (Robot HAT). \nAfter turning on again, the Raspberry Pi will automatically run the program to set the servos port signal to turn the servos to the middle position, which is convenient for mechanical assembly.')
