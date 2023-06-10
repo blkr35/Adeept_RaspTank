@@ -10,6 +10,19 @@ os.environ["PIP_ROOT_USER_ACTION"]="ignore"
 curpath = os.path.realpath(__file__)
 thisPath = "/" + os.path.dirname(curpath)
 
+
+def replace_num(file,initial,new_num):
+    newline=""
+    str_num=str(new_num)
+    with open(file,"r") as f:
+        for line in f.readlines():
+            if(line.find(initial) == 0):
+                line = (str_num+'\n')
+            newline += line
+    with open(file,"w") as f:
+        f.writelines(newline)
+
+
 def add_file(file, atxt):
     str_atxt=str(atxt)
     with open(file,"a") as f:
@@ -22,6 +35,10 @@ def configure_wifi():
     pwd=input('Enter password:\n')
     content="network={{\nssid=\"{}\"\nproto=WPA2\nkey_mgmt=WPA-PSK\npairwise=CCMP TKIP\nscan_ssid=1\npsk=\"{}\"\npriority=10\n}}".format(ssid, pwd)
     add_file("/etc/wpa_supplicant.conf", content)
+
+
+print("***********************************************")
+print("Installing Adeept RaspTank Software Stack...")
 
 
 if not os.path.isfile("//.rasptank_wifi"):
@@ -40,9 +57,6 @@ if not os.path.isfile("//etc/init.d/rasptank_service.sh"):
     except:
         print("Error: installation service could not be configured.")
 
-    
-print("Installing Adeept RaspTank Software Stack...")
-
 
 commands = [
     "pip3 install --upgrade pip",
@@ -60,6 +74,12 @@ for x in range(3):
 
 if x == 2 and mark == 1:
     print("Installing all python dependencies failed. The software may not work as expected")
+
+
+try:
+    replace_num("/boot/config.txt", '#dtparam=i2c_arm=off','dtparam=i2c_arm=on\nstart_x=1\n')
+except:
+    print('Error updating boot config to enable i2c. Please try again.')
 
 
 try: #fix conflict with onboard Raspberry Pi audio
