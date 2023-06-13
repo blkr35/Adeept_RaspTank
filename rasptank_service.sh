@@ -8,6 +8,13 @@ case "$1" in
   stop)
     killall python3
     ;;
+  status)
+    if [ $(pidof python3) ]; then
+        echo "RaspTank software is running"
+    else
+        echo "RaspTank software has stopped"
+    fi
+    ;;
   *)
     ;;
 esac
