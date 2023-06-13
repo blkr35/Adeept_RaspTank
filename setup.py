@@ -76,7 +76,7 @@ mark = 0
 for x in range(3):
     for command in commands:
         if os.system(command) != 0:
-            print("Error running installation steps (attempt #"+x+"/3)")
+            print("Error running installation steps (attempt #{}/3)".format(x+1))
             mark = 1
     if mark == 0:
         break
