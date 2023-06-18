@@ -125,5 +125,5 @@ print('Restarting...')
 
 time.sleep(3)
 os.system("reboot")
-os.exit()
+exit()
 

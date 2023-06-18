@@ -6,9 +6,9 @@ flask
 flask_cors
 websockets
 numpy
-opencv-contrib-python
 imutils
 zmq
 pybase64
 psutil
 luma.oled
+opencv-contrib-python
