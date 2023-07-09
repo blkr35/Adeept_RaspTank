@@ -8,26 +8,33 @@ Follow instructions from https://github.com/blkr35/meta-rasptank to build the OS
 
 At boot, the IP address of the robot will be displayed to allow to connect using the WEB App or SSH.
 
-## 2. Controlling Robot via WEB App
+## 2. WEB App service
 
-- The WEB app is developed for common users to control the robot in an easier way. It's convenient to use WEB app; you may use it to wirelessly control the robot on any device with a web browser (Google Chrome was used for testing).  
+In the console, you can check the status of the service with:
+```
+/etc/init.d/rasptank_service.sh status
+```
+You can stop/start it with:
+```
+/etc/init.d/rasptank_service.sh stop
+/etc/init.d/rasptank_service.sh start
+```
 
-- Generally Raspberry Pi will auto run `webServer.py` when booting and establish a web server in the LAN. You may then use any other computer, mobile or tablet in the same LAN to visit the webpage and control the robot.
+## 3. Controlling Robot via WEB App
 
-- How to tell whether the robot has run the `webServer.py` or not: If the WS2812-LED lights up with the breathing effect, it means the robot has booted and runs the program automatically.    
+- Raspberry Pi will auto run `server/server.py` when booting and run a web UI on the LAN to control the robot.
 
-- If the program is not run when the robot is booted, try to connect Raspberry Pi via SSH, manually run `webServer.py` with code and check the errors. Refer to the **Q&A** below or email us for help (before manually running `webServer.py`, you need to end the program possibly auto run in the backend to release resources. 
+- When the service is running, the WS2812-LEDs light up with a breathing effect.    
 
-    > sudo killall python3  
-    > sudo python3 [RobotName]/server/webServer.py
+- If the program is not running after boot, you can check the log file in `/var/log/rasptank.log` for more information.
 
-- If the `webServer.py` is auto run successfully, open a web browser (here Google Chrome), type in the IP address of the Raspberry Pi, with `:5000` added to the end, and go to the next step, as shown below:   
+- To connect to the web UI, type in the IP address of the Raspberry Pi port `5000` in you web browser, e.g.   
 
     > 192.168.3.161:5000  
 
-- If no image is displayed, try manual running `webServer.py` as described in the step above.  
+- If the web UI doesn't show, try stop/start the service and check the logs as described above.  
 
-- If image is shown, you can control the robot to move now. You may check the description for keyboard shortcuts `Instruction` at the bottom and control the robot based on its general functions with the keyboard.   
+- If the web UI is shown, check the description for keyboard shortcuts `Instruction` at the bottom and control the robot:   
 
 - `Video` window shows the image captured by the robot's camera in real time.  
 
@@ -59,16 +66,4 @@ At boot, the IP address of the robot will be displayed to allow to connect using
     - When the function is on, the robot will automatically lock one particular color in the camera view. By default it tracks bright yellow objects. You can change the color as you want. When an object is locked, the LED on the robot will turn orange. As the robot's head can only move up and down, the program does not involve tracking colors horizontally. If you have interest in this part, you may add the motor control based on the openCV section to realize effect.   
 
 ![webControl](images/webControl.png)
-
-## 3. WEB App service
-
-In the console, you can check the status of the service with:
-```
-/etc/init.d/rasptank_service.sh status
-```
-You can stop/start it with:
-```
-/etc/init.d/rasptank_service.sh stop
-/etc/init.d/rasptank_service.sh start
-```
 
