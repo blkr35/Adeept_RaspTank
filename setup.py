@@ -10,6 +10,10 @@ os.environ["PIP_ROOT_USER_ACTION"]="ignore"
 curpath = os.path.realpath(__file__)
 thisPath = "/" + os.path.dirname(curpath)
 
+if not os.popen('uname -n').read().strip() == 'rasptank':
+    print("This script can only run on RaspTank OS")
+    os.exit()
+
 
 def replace_num(file,initial,new_num):
     newline=""
@@ -66,15 +70,6 @@ else:
         os.system("reboot")
         os.exit()
 
-
-commands = [
-    "pip3 install --upgrade pip",
-    "pip3 install -r " + thisPath + "/server/requirements.txt",
-]
-
-for command in commands:
-    if os.system(command) != 0:
-        print("Could not update python dependencies")
 
 try:
     replace_num("/boot/config.txt", '#dtparam=i2c_arm=off','dtparam=i2c_arm=on\nstart_x=1\n')
