@@ -72,18 +72,9 @@ commands = [
     "pip3 install -r " + thisPath + "/server/requirements.txt",
 ]
 
-mark = 0
-for x in range(3):
-    for command in commands:
-        if os.system(command) != 0:
-            print("Error running installation steps (attempt #{}/3)".format(x+1))
-            mark = 1
-    if mark == 0:
-        break
-
-if x == 2 and mark == 1:
-    print("Installing all python dependencies failed. The software may not work as expected")
-
+for command in commands:
+    if os.system(command) != 0:
+        print("Could not update python dependencies")
 
 try:
     replace_num("/boot/config.txt", '#dtparam=i2c_arm=off','dtparam=i2c_arm=on\nstart_x=1\n')
